@@ -1,0 +1,30 @@
+@url=http://localhost:3000
+### Auth role admin
+POST {{url}}/login
+Content-Type: application/json
+
+{
+  "username": "user1@devkingos.com",
+  "password": "123456"
+}
+
+### Auth role user
+###
+@token = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIzZE9ST250WHRKbXBZOTBGM0o4RDczdWpLbU9rZ1NhYy1JVXFUeTZwdHh3In0.eyJleHAiOjE2MzcwMjEzOTgsImlhdCI6MTYzNzAyMTA5OCwianRpIjoiYTdjM2I0MDgtZTI3MC00MTdiLTgzNGMtMWU0MmQ4NzkxYjAzIiwiaXNzIjoiaHR0cDovL2hvc3QuZG9ja2VyLmludGVybmFsOjgwODAvYXV0aC9yZWFsbXMvZGV2a2luZ29zIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImI0MWE2MmM0LTA2YTktNGFmYi05Y2QwLWMyM2Q3Y2RkZTczMiIsInR5cCI6IkJlYXJlciIsImF6cCI6Im5lc3QiLCJzZXNzaW9uX3N0YXRlIjoiZmQ1YzE1M2EtODY3MS00YjZlLWEyMzQtNjQ1OGM2OWU3MDdhIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjMwMDAiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtZGV2a2luZ29zIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiZmQ1YzE1M2EtODY3MS00YjZlLWEyMzQtNjQ1OGM2OWU3MDdhIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJKdWFuICBDYXJsb3MgVmFsZGVzIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlcjFAdXNlci5jb20iLCJnaXZlbl9uYW1lIjoiSnVhbiAgQ2FybG9zIiwiZmFtaWx5X25hbWUiOiJWYWxkZXMiLCJlbWFpbCI6InVzZXIxQHVzZXIuY29tIn0.FDoOPH7wWMTkaRHRwF8CQ3iWPuivZwNHQHMyBxO0OyAirkZLlWRZAMVE2dIKr4rGOan99iKs323DpagYrJwtxNUnFTPih3eMjyl_j74aGbzxSKY7jGV5CKLZZLxZJq9zeP8Vu6Q0S15aKGjjnvwvnfSXszqCfkgXo2PKruCpH6H51unUumIst_GBoW13sRAsRwcnxRP5OT9Ak0H0BTM5FZ-X6r_IzCeX_HK0J4OledpZWM-dTez9W9keZSkw4vP6NgUAKs5QgiT34iN2oLOdTPR5O813jTmpkEYOKeLF-ZJPTsOJ4nFQuOanla-PIGbDAilZ7X17y6fF7Ik5o3ko4Q
+GET {{url}}/test-auth
+Authorization: Bearer {{token}}
+
+###
+POST {{url}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "payment_date": "2021-01-01",
+  "name": "Nueva Cuenta",
+  "amount": "100"
+}
+
+###
+GET {{url}}/transactions
+Authorization: Bearer {{token}}

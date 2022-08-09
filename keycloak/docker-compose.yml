@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: keycloak-db.local.dev
+    restart: unless-stopped
+    volumes:
+      - ../data/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_LISTEN_PORT_OUT}:${DOCKER_LISTEN_PORT_IN}
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:18.0.2-legacy
+    container_name: keycloak.local.dev
+    restart: unless-stopped
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: ${DB_CONNECTION}
+      DB_DATABASE: ${DB_NAME}
+      DB_USER: ${DB_USERNAME}
+      DB_SCHEMA: public
+      DB_PASSWORD: ${DB_PASSWORD}
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      KC_FEATURES:
+        authorization
+        token-exchange
+        docker
+        impersonation
+        scripts
+        web-authn
+        client-policies
+        dynamic-scopes
+        # account-api
+        # account2
+        # admin2
+        # client-secret-rotation
+        # declarative-user-profile
+        # recovery-codes
+        # step-up-authentication
+        # par
+        # update-email
+        # ciba
+        # upload-scripts
+
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "ssl=true"
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
